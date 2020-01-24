@@ -1,0 +1,53 @@
+---
+title: "Tidy Tuesday"
+date: "`r Sys.Date()`"
+output:
+  tufte::tufte_html: default
+
+---
+
+```{r setup, include=FALSE}
+library(tufte)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(echo = FALSE,
+                      tidy = FALSE, 
+                      message = FALSE,
+                      warning = FALSE,
+                      cache.extra = packageVersion('tufte'))
+
+options(htmltools.dir.version = FALSE)
+```
+
+
+A collection of plots using data from the #tidytuesday project  
+
+## Spotify Songs (2020-01-21)
+
+
+```{r, fig.path="animate/spotify-",  fig.fullwidth = TRUE}
+library(gganimate)
+
+load("../data/spotify-ggplot.RData")
+
+p1 <- pop_by_year +
+  transition_states(year) +
+  shadow_mark() +
+  enter_grow()
+
+animate(p1,
+        renderer = magick_renderer())
+
+```
+
+```{r,  fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-01-21-spotify/patch_one.png")
+
+```
+
+
+```{r,  fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-01-21-spotify/patch_two.png")
+
+```
+
