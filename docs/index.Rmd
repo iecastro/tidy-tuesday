@@ -22,10 +22,21 @@ options(htmltools.dir.version = FALSE)
 
 A collection of plots using data from the #tidytuesday project  
 
+## NFL Standings (2020-02-04)
+
+
+
+
+```{r, fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-02-04-nfl-attendance/margins.jpeg")
+```
+
+
 ## Spotify Songs (2020-01-21)
 
 
-```{r, fig.path="animate/spotify-",  fig.fullwidth = TRUE}
+
+```{r, fig.path="animate/spotify-",  fig.fullwidth = TRUE, eval=FALSE}
 library(gganimate)
 
 load("../data/spotify-ggplot.RData")
@@ -39,6 +50,13 @@ animate(p1,
         renderer = magick_renderer())
 
 ```
+
+
+```{r}
+knitr::include_graphics("animate/spotify-unnamed-chunk-1-1.gif")
+
+```
+
 
 ```{r,  fig.fullwidth = TRUE}
 knitr::include_graphics("../plots/2020-01-21-spotify/patch_one.png")
