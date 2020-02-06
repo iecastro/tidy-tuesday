@@ -1,8 +1,8 @@
 ---
 title: "Tidy Tuesday"
-date: "`r Sys.Date()`"
 output:
-  tufte::tufte_html: default
+  tufte::tufte_html:
+   tufte_features: ["fonts", "italics"]
 
 ---
 
@@ -30,6 +30,11 @@ A collection of plots using data from the #tidytuesday project
 ```{r, fig.fullwidth = TRUE}
 knitr::include_graphics("../plots/2020-02-04-nfl-attendance/margins.jpeg")
 ```
+
+```{r, fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-02-04-nfl-attendance/away_attend.jpeg")
+```
+
 
 
 ## Spotify Songs (2020-01-21)
