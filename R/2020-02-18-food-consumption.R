@@ -25,11 +25,13 @@ plot_data <- data %>%
              food_category %in%
                c("Beef", "Eggs", "Fish",
                  "Lamb & Goat", 
-                 "Milk - inc. cheese") ~ "Animal foods",
+                 "Milk - inc. cheese",
+                 "Pork", "Poultry") ~ "Animal foods",
              !food_category %in% 
                c("Beef", "Eggs", "Fish",
                  "Lamb & Goat", 
-                 "Milk - inc. cheese") ~ "Plant-based foods"
+                 "Milk - inc. cheese",
+                 "Pork", "Poultry") ~ "Plant-based foods"
            ))
 
 p1 <- ggplot(plot_data,
@@ -52,12 +54,12 @@ p1 <- ggplot(plot_data,
     aes(consumption, 
         co2_emmission,
         label = food_category),
-    nudge_x = -2.75,
-    nudge_y = -.5,
+    nudge_x = -2.5,
+    nudge_y = -.25,
     direction = "both",
-    hjust = 2.5,
-    vjust = 1,
-    seed = 156) +
+    hjust = 2,
+    vjust = 1.5,
+    seed = 300) +
   theme(legend.position = "none",
         axis.text = element_text(color = "black"),
         panel.grid.minor.x = element_blank())
@@ -89,7 +91,7 @@ p_int <- interact_plot(mod_int,
               legend.main = "") +
   theme(legend.position = "top") +
   annotate("text", x = 120, y= 1500, 
-           label = "F(3, 1426) = 145.37, p < 0.001, R2 = 0.23")
+           label = "F(3, 1426) = 123.61, p < 0.001, R2 = 0.21")
 
 
 tab <- sjPlot::tab_model(mod, mod_int,
