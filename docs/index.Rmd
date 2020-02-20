@@ -22,8 +22,26 @@ options(htmltools.dir.version = FALSE)
 
 A collection of plots using data from the #tidytuesday project  
 
-## NFL Standings (2020-02-04)
+## Food Consumption (2020-02-18)  
 
+```{r, fig.cap="Although CO2 emissions increase with consumption, regardless of food type, an interaction model shows us that on average CO2 emissions are higher with animal-food consumption than with plant-based consumption"}
+knitr::include_graphics("../plots/2020-02-18-food-consumption/interaction.png")
+```
+
+
+```{r, fig.cap="Using a log-log plot really helps us see the relationship between these variables"}
+knitr::include_graphics("../plots/2020-02-18-food-consumption/type-facet.png")
+```
+
+
+```{r, fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-02-18-food-consumption/log-scales.png")
+```
+
+
+
+
+## NFL Standings (2020-02-04)
 
 
 
