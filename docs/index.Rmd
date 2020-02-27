@@ -22,6 +22,14 @@ options(htmltools.dir.version = FALSE)
 
 A collection of plots using data from the #tidytuesday project  
 
+## MMR vaccination (2020-02-25)  
+
+```{r, fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-02-25-measles/ny-rates.png")
+```
+
+
+
 ## Food Consumption (2020-02-18)  
 
 ```{r, fig.cap="Although CO2 emissions increase with consumption, regardless of food type, an interaction model shows us that on average CO2 emissions are higher with animal-food consumption than with plant-based consumption"}
