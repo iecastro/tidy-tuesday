@@ -1,5 +1,10 @@
 [#tidytuesday](https://github.com/rfordatascience/tidytuesday) plots  
 
+# Measles data (2020-02-25)
+
+![](plots/2020-02-25-measles/ny-rates.png)  
+
+
 # Spotify songs (2020-01-21)  
 
 ![](docs/animate/spotify-unnamed-chunk-1-1.gif)  
