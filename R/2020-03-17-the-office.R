@@ -1,5 +1,6 @@
 library(tidyverse)
 library(panelr)
+library(tidytext)
 
 office_ratings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv')
 
@@ -70,4 +71,12 @@ office %>%
   labs(y = "Avg. # of votes",
        x = NULL)
 
+#==== text ====
+
+titles <- office %>% 
+  group_by(season) %>% 
+  unnest_tokens(word, title,
+                drop = FALSE) %>% 
+  anti_join(stop_words) %>% 
+  left_join(get_sentiments("bing"))
 
