@@ -26,7 +26,7 @@ tbi_military %>%
   theme_minimal()
 
 
-tbi_year %>% 
+time <- tbi_year %>% 
   separate(year,
            into = c("cent", "year"),
            sep = 2) %>% 
@@ -61,30 +61,41 @@ tbi_year %>%
   scale_y_continuous(labels = scales::comma,
                      name = NULL) +
   labs(x = NULL,
-       color = NULL,
-       title = "Traumatic brain injury (TBI) outcomes in the US",
-       subtitle = "by cause of injury")
+       color = "Outcome:",
+       subtitle = "Causes and outcomes of traumatic brain injury (TBI) in the US")
 
 #save(year,
 #     file = "data/tbi-ggplot.RData")
 
-# lost year variable after new commit
-tbi_military %>% 
-  group_by(service, severity) %>% 
-  summarise(total = sum(diagnosed, na.rm = TRUE)) %>% 
-  ggplot(aes(severity,
-             total,
-             fill = fct_reorder(service, -total))) +
-  geom_col(alpha = .8,
-           position = "dodge") +
+# year variable back after new commit
+mil <- tbi_military  %>% 
+  separate(year,
+           into = c("cent", "year"),
+           sep = 2) %>% 
+  mutate(year = paste0("'", year),
+         severity = 
+           fct_relevel(severity,
+                       "Moderate",
+                       "Mild",
+                       after = Inf)) %>% 
+  ggplot(aes(as.factor(year),
+             diagnosed,
+             fill = severity)) +
+  geom_col(alpha = .8) +
   gameofthrones::scale_fill_got_d(
-    option = "targaryen2",
     direction = -1) +
-  theme_minimal() +
-  scale_y_continuous(labels = scales::comma)
+  theme_minimal(base_family = "serif") +
+  theme(axis.text.x = element_text(color="black"), legend.position = "bottom") +
+  facet_wrap(~service,
+             scales = "free_y") +
+  scale_y_continuous(labels = scales::comma) +
+  labs(y = NULL,
+       x = NULL,
+       fill = "TBI severity",
+       subtitle = "TBI diagnoses across Active and Guard/Reserve service members")
 
 # age x cause
-tbi_age %>% 
+props <- tbi_age %>% 
   filter(!age_group %in% c("0-17","Total")) %>% 
   mutate(age_group = 
            fct_relevel(age_group, "0-4", "5-14"),
@@ -92,19 +103,45 @@ tbi_age %>%
                                         -number_est)) %>% 
   ggplot(aes(age_group, number_est)) + 
   geom_col(position = "fill",
-           aes(fill = fct_rev(injury_mechanism)),
-           alpha = .8) +
+           aes(fill = fct_rev(injury_mechanism))) +
   scico::scale_fill_scico_d(direction = -1,
                             labels = label_wrap_gen(30)) +
-  scale_y_continuous(labels = scales::percent,
+  scale_y_continuous(breaks = c(1,.2,.4,.6,.8,1),
+                     labels = scales::percent,
                      sec.axis = dup_axis()) +
-  theme_minimal(base_family = "serif") +
+  theme_minimal(base_family = "serif",
+                base_size = 12) +
   theme(panel.grid.major.x = element_blank(),
-        axis.text.x = element_text(color="black")) +
+        axis.text.x = element_text(color="black",
+                                   size = 12),
+        plot.caption = element_text(face = "italic")) +
   labs(fill = NULL,
-       title = "Causes of TBI by age-group",
+       title = "Falls cause the highest relative proportion \nof TBI injuries across most age-groups",
        x = NULL,
-       y = NULL)
+       y = NULL,
+       caption = "Data: 2014 CDC surveillance report on TBI")
+
+tab <- tbi_age %>% 
+  filter(!age_group %in% c("0-17","Total")) %>% 
+  mutate(age_group = 
+           fct_relevel(age_group, "0-4", "5-14")) %>% 
+  group_by(age_group) %>% 
+  summarise(count = sum(number_est, na.rm = TRUE)) %>% 
+  mutate(count = scales::comma(count)) %>% 
+  spread(key = age_group, value = count) %>% 
+  rownames_to_column() %>% 
+  mutate(rowname = "observations:") %>% 
+  rename(" " = rowname)
 
 
+# save with grob
+ggsave("plots/2020-03-24-tbi/agebycause-props2.png", 
+       plot = 
+         gridExtra::grid.arrange(
+           props, 
+           gridExtra::tableGrob(tab, rows = NULL,
+                                theme = gridExtra::ttheme_minimal()), 
+           ncol = 1,
+           heights = c(7,.75))
+)
 

@@ -24,15 +24,19 @@ A collection of plots using data from the #tidytuesday project
 
 ## TBI (2020-03-24)
 
-
 ```{r, fig.fullwidth = TRUE}
-knitr::include_graphics("../plots/2020-03-24-tbi/agebycause-props.png")
+knitr::include_graphics("../plots/2020-03-24-tbi/agebycause-props2.png")
 
 ```
 
 
 ```{r,  fig.fullwidth = TRUE}
  knitr::include_graphics("../plots/2020-03-24-tbi/tbi-causes.png")
+```
+
+
+```{r, fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-03-24-tbi/mil-tbi.png")
 ```
 
 
