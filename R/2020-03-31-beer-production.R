@@ -38,11 +38,25 @@ states %>%
         legend.title = element_blank(),
         panel.grid.minor.x = element_blank(),
         strip.text = element_text(size = 12,
-                                  face = "italic")) +
-  labs(x = NULL,
+                                  face = "italic"),
+        axis.title.x = element_text(hjust = 1,
+                                    size = 12,
+                                    face = "bold"),
+        axis.ticks.y = element_line(color = "black")) +
+  labs(x = "Barrels produced",
        y = NULL)
 
 
+
+size %>% 
+  filter(brewer_size == "Total") %>% 
+  ggplot(aes(as.factor(year),
+             n_of_brewers)) +
+  geom_point(aes(color = total_barrels,
+                 size = total_barrels)) +
+  scico::scale_color_scico(labels = scales::comma) +
+  theme_minimal()
+  
 
 #-- junk drawer --
 materials %>% 
