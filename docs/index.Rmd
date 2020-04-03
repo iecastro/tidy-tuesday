@@ -22,7 +22,20 @@ options(htmltools.dir.version = FALSE)
 
 A collection of plots using data from the #tidytuesday project  
 
-## TBI (2020-03-24)
+# Beer production (2020-03-31) 
+
+```{r, fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-03-31-beer-production/production-statebin.png")
+
+```
+
+
+```{r, fig.fullwidth = TRUE}
+knitr::include_graphics("../plots/2020-03-31-beer-production/production-dumbbell.png")
+
+```
+
+# TBI (2020-03-24)
 
 ```{r, fig.fullwidth = TRUE}
 knitr::include_graphics("../plots/2020-03-24-tbi/agebycause-props2.png")
@@ -41,7 +54,7 @@ knitr::include_graphics("../plots/2020-03-24-tbi/mil-tbi.png")
 
 
 
-## The Office (2020-03-17)
+# The Office (2020-03-17)
 
 ```{r}
 knitr::include_graphics("../plots/2020-03-17-the-office/plot2.png")
@@ -54,7 +67,7 @@ knitr::include_graphics("../plots/2020-03-17-the-office/plot1.png")
 ```
 
 
-## MMR vaccination (2020-02-25)  
+# MMR vaccination (2020-02-25)  
 
 ```{r, fig.fullwidth = TRUE}
 knitr::include_graphics("../plots/2020-02-25-measles/ny-rates.png")
@@ -62,7 +75,7 @@ knitr::include_graphics("../plots/2020-02-25-measles/ny-rates.png")
 
 
 
-## Food Consumption (2020-02-18)  
+# Food Consumption (2020-02-18)  
 
 ```{r, fig.cap="Although CO2 emissions increase with consumption, regardless of food type, an interaction model shows us that on average CO2 emissions are higher with animal-food consumption than with plant-based consumption"}
 knitr::include_graphics("../plots/2020-02-18-food-consumption/interaction.png")
@@ -81,7 +94,7 @@ knitr::include_graphics("../plots/2020-02-18-food-consumption/log-scales.png")
 
 
 
-## NFL Standings (2020-02-04)
+# NFL Standings (2020-02-04)
 
 
 
@@ -95,7 +108,7 @@ knitr::include_graphics("../plots/2020-02-04-nfl-attendance/away_attend.jpeg")
 
 
 
-## Spotify Songs (2020-01-21)
+# Spotify Songs (2020-01-21)
 
 
 

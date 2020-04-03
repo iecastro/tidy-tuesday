@@ -46,6 +46,63 @@ states %>%
   labs(x = "Barrels produced",
        y = NULL)
 
+#-- taxed --
+taxed %>% 
+  filter(year >= 2018 & 
+           type == "In bottles and cans" & 
+           month == 12) %>%  # cannot be linked to state production
+  select(year, type, ytd_current, tax_rate) 
+
+#-- state bins --
+states %>% 
+  filter(type == "Bottles and Cans" &
+           state != "total") %>% 
+  count(state, wt = barrels, name = "total") %>% 
+  mutate(total = total / 1000000) %>% 
+  statebins::statebins(value_col = "total",
+                       round = TRUE) +
+  theme_void(base_family = "serif",
+             base_size = 12) +
+  gameofthrones::scale_fill_got(labels = scales::comma,
+                                direction = -1) +
+  labs(fill = "Barrels \nproduced \n(in millions)",
+       title = "State level production of beer \nin cans and bottles (2008-2019)")
+
+
+#-- junk drawer -
+
+#-- materials 
+mat_all <- materials %>% 
+  filter(material_type %in% 
+           c("Grain Products", 
+             "Non-Grain Products") & 
+           month == 12 &
+           !is.na(ytd_current)) %>% 
+  select(year, material_type,type,  ytd_current) %>% 
+  mutate(year = as.factor(year))
+
+mat_all  %>% 
+  ggplot(aes(year, ytd_current)) +
+  geom_point(aes(color = type)) +
+  geom_line(aes(color = type,
+                group = type)) +
+  facet_wrap(~material_type,
+             nrow = 2,
+             scales = "free_y") +
+  scale_y_log10(labels = scales::comma) +
+  ggrepel::geom_text_repel(
+    data = mat_all %>% 
+      filter(year == 2014),
+    aes(year, ytd_current,
+        label = type),
+    nudge_y = - 0.5, 
+    direction = "x") +
+  labs(y = "pounds of material used",
+       x = NULL) +
+  theme_minimal(base_family = "serif") +
+  theme(legend.position = "none",
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.x = element_blank())
 
 
 size %>% 
@@ -58,7 +115,6 @@ size %>%
   theme_minimal()
   
 
-#-- junk drawer --
 materials %>% 
   glimpse()
 

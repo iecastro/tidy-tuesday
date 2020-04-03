@@ -1,5 +1,8 @@
 [#tidytuesday](https://github.com/rfordatascience/tidytuesday) plots  
 
+# Beer production (2020-03-31)
+![](plots/2020-03-31-beer-production/production-statebin.png)
+
 # Traumatic brain injury (2020-03-24)
 ![](plots/2020-03-24-tbi/tbi-causes.png)  
 
