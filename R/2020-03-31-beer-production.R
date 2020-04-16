@@ -46,13 +46,6 @@ states %>%
   labs(x = "Barrels produced",
        y = NULL)
 
-#-- taxed --
-taxed %>% 
-  filter(year >= 2018 & 
-           type == "In bottles and cans" & 
-           month == 12) %>%  # cannot be linked to state production
-  select(year, type, ytd_current, tax_rate) 
-
 #-- state bins --
 states %>% 
   filter(type == "Bottles and Cans" &
@@ -70,6 +63,13 @@ states %>%
 
 
 #-- junk drawer -
+
+#-- taxed --
+taxed %>% 
+  filter(year >= 2018 & 
+           type == "In bottles and cans" & 
+           month == 12) %>%  # cannot be linked to state production
+  select(year, type, ytd_current, tax_rate) 
 
 #-- materials 
 mat_all <- materials %>% 
