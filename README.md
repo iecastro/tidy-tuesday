@@ -1,5 +1,8 @@
 [#tidytuesday](https://github.com/rfordatascience/tidytuesday) plots  
 
+# Best hip-hop songs (2020-04-14)
+![](plots/2020-04-14-rap-songs/biggie-chart.png)
+
 # Beer production (2020-03-31)
 ![](plots/2020-03-31-beer-production/production-statebin.png)
 
