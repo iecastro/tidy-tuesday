@@ -89,23 +89,29 @@ states <- bind_cols(enframe(state.abb),
   
   
 ranks <- ranks %>% 
-  left_join(states, by = "state")
+  left_join(states, by = "state") %>% 
+  left_join(kids %>% 
+              filter(variable == "pubhealth" &
+                       year == 2016) %>% 
+              select(state, perchild2016 = inf_adj_perchild),
+             by = "state")
+
 
 slope <- ggplot() +
   geom_segment(data = ranks, 
-               aes(x = "Spending rank \nin 1997", 
-                   xend = "Spending rank \nin 2016",
+               aes(x = "Per child \nspending rank \nin 1997", 
+                   xend = "Per child \nspending rank \nin 2016",
                    y = rank1997, yend = rank2016,
                    color = diff, size = diff)) +
   geom_vline(aes(xintercept = c(1, 2)), 
              color = "#b2b2b2") +
   scale_x_discrete(position = "top") +
   geom_text(data = ranks, size = 2.75, 
-            aes("Spending rank \nin 1997", rank1997, 
+            aes("Per child \nspending rank \nin 1997", rank1997, 
                 label = state),
                 hjust = 1, nudge_x = -.01) +
   geom_text(data = ranks, size = 2.5, 
-            aes("Spending rank \nin 2016", rank2016, 
+            aes("Per child \nspending rank \nin 2016", rank2016, 
                 label = state),
                 hjust = 0, nudge_x = .01) +
   scale_y_reverse(expand = expansion(
@@ -127,7 +133,35 @@ slope <- ggplot() +
                         "nochange" = .3))
 
 
-wrap_plots(binmap, slope, widths = 3:2) +
+spent <- ggplot() +
+  geom_point(data = ranks,
+             aes(x = "Per child \nspending \nin 2016", 
+                 y = rank2016,
+                 color = perchild2016),
+             size = 3) +
+  scale_y_reverse() +
+  scale_x_discrete(position = "top",
+                   limits = c("Per child \nspending \nin 2016"),
+                   expand = expansion(
+                     mult = c(.05, .05))) +
+  scico::scale_color_scico() +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text.y = element_blank(),
+        axis.title = element_blank(),
+        axis.text.x = element_text(face = "bold"),
+        panel.grid = element_blank(),
+        plot.margin = margin(0,1,0,-4, "cm")) +
+  geom_text(data = ranks,
+            aes( "Per child \nspending \nin 2016", rank2016,
+                label = scales::dollar(perchild2016*1000)),
+            hjust = 0, nudge_x = 0.002, size = 2.25) +
+  geom_text(data = ranks,
+            aes( "Per child \nspending \nin 2016", rank2016,
+                label = abb),
+            hjust = 1, , nudge_x = -0.002, size = 2)
+
+wrap_plots(slope,spent, widths = 3:2) +
   plot_annotation(title = "Public health spending per child in the U.S. (2016)", 
                   subtitle = "State-by-State Spending on Kids Dataset",
                   caption = "Source: Urban Institute; {tidykids}",
